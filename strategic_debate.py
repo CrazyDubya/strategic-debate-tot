@@ -448,6 +448,6 @@ def generate_quick_argument(topic: str, stance: str, use_case: str = "educationa
     }
     
     config = config_map.get(use_case, QuickConfig.for_educational_use())
-    agent = DebateAgent(config, openai_key_path="openai_key.txt")
+    agent = DebateAgent(config, openai_key_path=openai_key_path)
     
     return agent.generate_argument(topic, stance)
