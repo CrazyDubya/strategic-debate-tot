@@ -428,7 +428,7 @@ class DebateSession:
 
 
 # Convenience function for quick argument generation
-def generate_quick_argument(topic: str, stance: str, use_case: str = "educational") -> str:
+def generate_quick_argument(topic: str, stance: str, use_case: str = "educational", openai_key_path: str = "openai_key.txt") -> str:
     """
     Generate a quick argument using predefined configurations
     
