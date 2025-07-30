@@ -163,6 +163,17 @@ class DebateAgent:
             with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.txt') as f:
                 f.write(openai_key)
                 key_file_path = f.name
+            try:
+                # Setup DSPy
+                set_up_dspy(
+                    openai_key_path=key_file_path,
+                    model_name=self.config.model_name,
+                    max_tokens=self.config.max_tokens
+                )
+            finally:
+                # Ensure the temporary file is deleted
+                import os
+                os.remove(key_file_path)
         else:
             key_file_path = openai_key_path or "openai_key.txt"
         
