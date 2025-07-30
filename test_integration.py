@@ -259,8 +259,10 @@ class IntegrationTester:
 
 def create_fake_openai_key():
     """Create a fake OpenAI key file for testing without actual API calls"""
-    with open("openai_key.txt", "w") as f:
-        f.write("fake_key_for_testing")
+    temp_file = tempfile.NamedTemporaryFile(delete=False, mode="w", suffix=".txt")
+    temp_file.write("fake_key_for_testing")
+    temp_file.close()
+    return temp_file.name
 
 
 async def run_integration_tests():
