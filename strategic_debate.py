@@ -239,15 +239,8 @@ class DebateAgent:
         Returns:
             Generated argument string
         """
-        # Import State class directly
-        from abstractions.tree.tree import State
-        
-        # Create conversation state directly
-        state = State(
-            topic=topic,
-            stance=stance,
-            conversation=conversation or []
-        )
+        # Create conversation state using helper method
+        state = self.create_state(topic, stance, conversation)
         
         # Create response parameters
         response_parameters = ResponseParameters(
