@@ -1,1 +1,1 @@
-<replace this line with your OpenAI API key>
+fake_key
