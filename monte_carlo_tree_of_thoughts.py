@@ -32,9 +32,9 @@ class MonteCarloTreeOfThought(dspy.Module, abc.ABC, metaclass=CombinedMeta):
             dspy.Module: The initialized function.
         """
         if self.use_chain_of_thoughts:
-            return dspy.TypedChainOfThought(signature=signature)
+            return dspy.ChainOfThought(signature=signature)
         else:
-            return dspy.TypedPredictor(signature=signature)
+            return dspy.Predict(signature=signature)
     
     @abc.abstractmethod
     def _get_evaluator(self, state: State) -> dspy.Module:

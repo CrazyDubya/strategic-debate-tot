@@ -72,6 +72,45 @@ We came up with several reasoning types, each with their own thought generators 
 
 We are considering additional reasoning types such as "Additive Reasoning" (adding one new relevant/helpful claim at each reasoning step) and "Repetitive Questioning" (identifying an ambiguity and resolving it in each reasoning step). We are looking for collaborators to develop these with us :D
 
+## Integration with Other Agentic Workflows
+
+This library is designed for easy integration into larger agentic systems and workflows. We provide several integration patterns and utilities:
+
+### Quick Start Integration
+
+```python
+from strategic_debate import DebateAgent, QuickConfig, generate_quick_argument
+
+# Simple argument generation
+argument = generate_quick_argument(
+    topic="AI should be regulated", 
+    stance="PRO", 
+    use_case="educational"
+)
+
+# Using configured agent
+agent = DebateAgent(QuickConfig.for_content_generation())
+response = agent.generate_argument("Remote work increases productivity", "PRO")
+```
+
+### Integration Patterns
+
+- **Agent Framework Integration**: Compatible with LangGraph, CrewAI, and custom agent systems
+- **API Service Deployment**: FastAPI-based microservice for REST integration  
+- **Pipeline Processing**: Batch processing capabilities for data workflows
+- **Multi-turn Debates**: Session management for ongoing argumentative conversations
+
+### Example Use Cases
+
+- **E-learning Platforms**: Debate training and critical thinking exercises
+- **Content Generation**: Marketing copy and editorial writing assistance  
+- **Research Analysis**: Multi-perspective argument analysis
+- **Conversational AI**: Chatbots with structured argumentation capabilities
+
+For complete integration examples and documentation, see:
+- [Integration Guide](INTEGRATION_GUIDE.md) - Comprehensive integration documentation
+- [Examples Directory](examples/) - Working code examples for different integration patterns
+
 ## Installation
 
 To install the Strategic Debate library, you must first clone or download the repository from GitHub:
@@ -114,14 +153,65 @@ brew install graphviz
 
 ## Usage
 
+### Basic Usage
+
 Here's a basic example of how to use the Strategic Debate library:
+
+```python
+from strategic_debate import DebateAgent, QuickConfig
+from utils import set_up_dspy
+
+# Set up the environment
+set_up_dspy(openai_key_path="your_openai_key_path_here")
+
+# Quick argument generation
+from strategic_debate import generate_quick_argument
+argument = generate_quick_argument(
+    topic="The government should enforce regulation on AI technology.",
+    stance="PRO",
+    use_case="educational"
+)
+print(f"Generated argument: {argument}")
+```
+
+### Advanced Usage
+
+```python
+from strategic_debate import DebateAgent, DebateConfig, ReasoningType, SearchStrategy
+from abstractions.tree.tree import create_conversation_state
+from abstractions.generator.generator import ResponseParameters
+
+# Custom configuration
+config = DebateConfig(
+    reasoning_type=ReasoningType.PLAN_AND_EXECUTE,
+    search_strategy=SearchStrategy.BEAM_SEARCH,
+    depth=3,
+    top_k=3,
+    evaluation_strategy="score"
+)
+
+# Initialize agent with custom config
+agent = DebateAgent(config)
+
+# Generate argument with conversation context
+argument = agent.generate_argument(
+    topic="Universal healthcare improves public health outcomes",
+    stance="PRO",
+    conversation=["Healthcare costs are too high for individuals to bear alone"],
+    visualize=True  # Creates a visualization of the reasoning tree
+)
+
+print(f"Generated argument: {argument}")
+```
+
+### Original Interface (Still Supported)
 
 ```python
 from strategic_debate import TreeOfThoughts, create_conversation_state
 from utils import set_up_dspy
 
-# Set up the environment
-set_up_dspy(openai_key="your_openai_key_here")
+# Set up the environment  
+set_up_dspy(openai_key_path="your_openai_key_path_here")
 
 # Initialize the conversation state
 state = create_conversation_state(
